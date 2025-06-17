@@ -1,0 +1,7 @@
+bin/
+obj/
+/packages/
+riderModule.iml
+/_ReSharper.Caches/
+# Rider specific files
+/customhost.platform.API/appsettings.Development.json
