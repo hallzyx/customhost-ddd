@@ -15,6 +15,7 @@ public class AppDbContext(DbContextOptions options) : DbContext(options)
 {
     // CRM DbSets
     public DbSet<Hotel> Hotels { get; set; }
+    public DbSet<Booking> Bookings { get; set; }
     
     // Guest Experience DbSets
     public DbSet<IoTDevice> IoTDevices { get; set; }

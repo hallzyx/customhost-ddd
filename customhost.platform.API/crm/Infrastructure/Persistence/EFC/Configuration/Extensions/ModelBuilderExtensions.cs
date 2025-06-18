@@ -15,9 +15,27 @@ public static class ModelBuilderExtensions
         builder.Entity<Hotel>().Property(h => h.Status).IsRequired().HasConversion<string>();
         builder.Entity<Hotel>().Property(h => h.CreatedAt).IsRequired().HasColumnType("datetime");
         builder.Entity<Hotel>().Property(h => h.AdminId).IsRequired();
+          // Specify table name explicitly
+        builder.Entity<Hotel>().ToTable("hotels");
+        
+        // Booking
+        builder.Entity<Booking>().HasKey(b => b.Id);
+        builder.Entity<Booking>().Property(b => b.Id).IsRequired().ValueGeneratedOnAdd();
+        builder.Entity<Booking>().Property(b => b.UserId).IsRequired();
+        builder.Entity<Booking>().Property(b => b.HotelId).IsRequired();
+        builder.Entity<Booking>().Property(b => b.RoomId).IsRequired();
+        builder.Entity<Booking>().Property(b => b.CheckInDate).IsRequired().HasColumnType("datetime");
+        builder.Entity<Booking>().Property(b => b.CheckOutDate).IsRequired().HasColumnType("datetime");
+        builder.Entity<Booking>().Property(b => b.Status).IsRequired().HasConversion<string>();
+        builder.Entity<Booking>().Property(b => b.TotalPrice).IsRequired().HasColumnType("decimal(18,2)");
+        builder.Entity<Booking>().Property(b => b.PaymentStatus).IsRequired().HasConversion<string>();
+        builder.Entity<Booking>().Property(b => b.SpecialRequests).HasMaxLength(1000);
+        builder.Entity<Booking>().Property(b => b.CreatedAt).IsRequired().HasColumnType("datetime");
+        builder.Entity<Booking>().Property(b => b.Preferences).HasColumnType("text");
+        builder.Entity<Booking>().Property(b => b.AppliedDevicePreferences).HasColumnType("text");
         
         // Specify table name explicitly
-        builder.Entity<Hotel>().ToTable("hotels");
+        builder.Entity<Booking>().ToTable("bookings");
         
         // Room
         builder.Entity<Room>().HasKey(r => r.Id);

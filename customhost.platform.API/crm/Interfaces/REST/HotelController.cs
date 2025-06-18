@@ -10,10 +10,11 @@ using Swashbuckle.AspNetCore.Annotations;
 namespace customhost_backend.crm.Interfaces.REST;
 
 [ApiController]
+
 [Route("api/v1/[controller]")]
 [Produces(MediaTypeNames.Application.Json)]
 [SwaggerTag("Available Hotel Endpoints.")]
-public class HotelsController(
+public class HotelController(
     IHotelCommandService hotelCommandService,
     IHotelQueryService hotelQueryService)
 : ControllerBase
