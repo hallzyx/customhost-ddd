@@ -1,8 +1,8 @@
-using customhost.platform.API.GuestExperience.Domain.Model.Aggregates;
+using customhost_backend.GuestExperience.Domain.Model.Aggregates;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace customhost.platform.API.GuestExperience.Infrastructure.Persistence.EFC.Configuration;
+namespace customhost_backend.GuestExperience.Infrastructure.Persistence.EFC.Configuration;
 
 /// <summary>
 /// Room Device entity configuration for Entity Framework Core

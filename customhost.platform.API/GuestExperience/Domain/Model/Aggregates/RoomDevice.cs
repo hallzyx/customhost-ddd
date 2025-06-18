@@ -1,6 +1,6 @@
-using customhost.platform.API.GuestExperience.Domain.Model.Commands;
+using customhost_backend.GuestExperience.Domain.Model.Commands;
 
-namespace customhost.platform.API.GuestExperience.Domain.Model.Aggregates;
+namespace customhost_backend.GuestExperience.Domain.Model.Aggregates;
 
 /// <summary>
 /// Room Device aggregate root that represents an IoT device assigned to a specific room

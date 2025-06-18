@@ -1,8 +1,8 @@
-using customhost.platform.API.GuestExperience.Application.Internal.CommandServices;
-using customhost.platform.API.GuestExperience.Application.Internal.QueryServices;
-using customhost.platform.API.GuestExperience.Domain.Repositories;
-using customhost.platform.API.GuestExperience.Domain.Services;
-using customhost.platform.API.GuestExperience.Infrastructure.Persistence.EFC.Repositories;
+using customhost_backend.GuestExperience.Application.Internal.CommandServices;
+using customhost_backend.GuestExperience.Application.Internal.QueryServices;
+using customhost_backend.GuestExperience.Domain.Repositories;
+using customhost_backend.GuestExperience.Domain.Services;
+using customhost_backend.GuestExperience.Infrastructure.Persistence.EFC.Repositories;
 using customhost_backend.Shared.Infrastructure.Interfaces.ASP.Configuration;
 using customhost_backend.Shared.Infrastructure.Persistence.EFC.Configuration;
 using customhost_backend.Shared.Infrastructure.Persistence.EFC.Repositories;

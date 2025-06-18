@@ -1,6 +1,6 @@
-using customhost.platform.API.GuestExperience.Domain.Model.Commands;
+using customhost_backend.GuestExperience.Domain.Model.Commands;
 
-namespace customhost.platform.API.GuestExperience.Domain.Model.Aggregates;
+namespace customhost_backend.GuestExperience.Domain.Model.Aggregates;
 
 /// <summary>
 /// User Device Preference aggregate root that stores personal preferences for IoT devices

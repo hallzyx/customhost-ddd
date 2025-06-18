@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using customhost.platform.API.GuestExperience.Infrastructure.Persistence.EFC.Configuration;
+using customhost_backend.GuestExperience.Infrastructure.Persistence.EFC.Configuration;
 
-namespace customhost.platform.API.GuestExperience.Infrastructure.Persistence.EFC.Configuration.Extensions;
+namespace customhost_backend.GuestExperience.Infrastructure.Persistence.EFC.Configuration.Extensions;
 
 /// <summary>
 /// Guest Experience context extension methods for ModelBuilder

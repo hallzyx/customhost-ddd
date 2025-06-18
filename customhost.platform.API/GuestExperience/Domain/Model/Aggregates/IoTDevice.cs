@@ -1,6 +1,6 @@
-using customhost.platform.API.GuestExperience.Domain.Model.Commands;
+using customhost_backend.GuestExperience.Domain.Model.Commands;
 
-namespace customhost.platform.API.GuestExperience.Domain.Model.Aggregates;
+namespace customhost_backend.GuestExperience.Domain.Model.Aggregates;
 
 /// <summary>
 /// IoT Device aggregate root that represents a smart device available in the hotel

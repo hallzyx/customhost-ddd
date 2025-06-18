@@ -1,7 +1,7 @@
-using customhost.platform.API.GuestExperience.Domain.Model.Aggregates;
+using customhost_backend.GuestExperience.Domain.Model.Aggregates;
 using customhost_backend.Shared.Domain.Repositories;
 
-namespace customhost.platform.API.GuestExperience.Domain.Repositories;
+namespace customhost_backend.GuestExperience.Domain.Repositories;
 
 /// <summary>
 /// Repository interface for Room Device aggregate

@@ -1,7 +1,7 @@
-using customhost.platform.API.GuestExperience.Domain.Model.Commands;
-using customhost.platform.API.GuestExperience.Interfaces.REST.Resources;
+using customhost_backend.GuestExperience.Domain.Model.Commands;
+using customhost_backend.GuestExperience.Interfaces.REST.Resources;
 
-namespace customhost.platform.API.GuestExperience.Interfaces.REST.Transform;
+namespace customhost_backend.GuestExperience.Interfaces.REST.Transform;
 
 /// <summary>
 /// Assembler class to convert CreateUserDevicePreferenceResource to CreateUserDevicePreferenceCommand

@@ -1,9 +1,9 @@
-using customhost.platform.API.GuestExperience.Domain.Model.Aggregates;
-using customhost.platform.API.GuestExperience.Domain.Model.Queries;
-using customhost.platform.API.GuestExperience.Domain.Repositories;
-using customhost.platform.API.GuestExperience.Domain.Services;
+using customhost_backend.GuestExperience.Domain.Model.Aggregates;
+using customhost_backend.GuestExperience.Domain.Model.Queries;
+using customhost_backend.GuestExperience.Domain.Repositories;
+using customhost_backend.GuestExperience.Domain.Services;
 
-namespace customhost.platform.API.GuestExperience.Application.Internal.QueryServices;
+namespace customhost_backend.GuestExperience.Application.Internal.QueryServices;
 
 /// <summary>
 /// IoT Device query service implementation

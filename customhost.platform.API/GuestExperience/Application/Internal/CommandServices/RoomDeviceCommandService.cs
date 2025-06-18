@@ -1,10 +1,10 @@
-using customhost.platform.API.GuestExperience.Domain.Model.Aggregates;
-using customhost.platform.API.GuestExperience.Domain.Model.Commands;
-using customhost.platform.API.GuestExperience.Domain.Repositories;
-using customhost.platform.API.GuestExperience.Domain.Services;
+using customhost_backend.GuestExperience.Domain.Model.Aggregates;
+using customhost_backend.GuestExperience.Domain.Model.Commands;
+using customhost_backend.GuestExperience.Domain.Repositories;
+using customhost_backend.GuestExperience.Domain.Services;
 using customhost_backend.Shared.Domain.Repositories;
 
-namespace customhost.platform.API.GuestExperience.Application.Internal.CommandServices;
+namespace customhost_backend.GuestExperience.Application.Internal.CommandServices;
 
 /// <summary>
 /// Room Device command service implementation

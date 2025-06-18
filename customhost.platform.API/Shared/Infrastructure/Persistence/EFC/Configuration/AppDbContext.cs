@@ -1,5 +1,5 @@
-using customhost.platform.API.GuestExperience.Domain.Model.Aggregates;
-using customhost.platform.API.GuestExperience.Infrastructure.Persistence.EFC.Configuration.Extensions;
+using customhost_backend.GuestExperience.Domain.Model.Aggregates;
+using customhost_backend.GuestExperience.Infrastructure.Persistence.EFC.Configuration.Extensions;
 using customhost_backend.crm.Infrastructure.Persistence.EFC.Configuration.Extensions;
 using customhost_backend.Shared.Infrastructure.Interfaces.Persistence.EFC.Configuration.Extensions;
 using EntityFrameworkCore.CreatedUpdatedDate.Extensions;

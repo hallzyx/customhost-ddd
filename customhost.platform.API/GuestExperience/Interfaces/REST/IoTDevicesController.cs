@@ -1,13 +1,13 @@
 using System.Net.Mime;
-using customhost.platform.API.GuestExperience.Domain.Model.Commands;
-using customhost.platform.API.GuestExperience.Domain.Model.Queries;
-using customhost.platform.API.GuestExperience.Domain.Services;
-using customhost.platform.API.GuestExperience.Interfaces.REST.Resources;
-using customhost.platform.API.GuestExperience.Interfaces.REST.Transform;
+using customhost_backend.GuestExperience.Domain.Model.Commands;
+using customhost_backend.GuestExperience.Domain.Model.Queries;
+using customhost_backend.GuestExperience.Domain.Services;
+using customhost_backend.GuestExperience.Interfaces.REST.Resources;
+using customhost_backend.GuestExperience.Interfaces.REST.Transform;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
-namespace customhost.platform.API.GuestExperience.Interfaces.REST;
+namespace customhost_backend.GuestExperience.Interfaces.REST;
 
 [ApiController]
 [Route("api/v1/[controller]")]

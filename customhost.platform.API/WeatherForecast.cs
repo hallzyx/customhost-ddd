@@ -1,4 +1,4 @@
-namespace customhost.platform.API;
+namespace customhost_backend;
 
 public class WeatherForecast
 {

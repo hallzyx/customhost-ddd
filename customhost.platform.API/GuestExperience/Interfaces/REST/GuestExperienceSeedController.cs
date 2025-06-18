@@ -1,11 +1,11 @@
 using System.Net.Mime;
-using customhost.platform.API.GuestExperience.Domain.Model.Aggregates;
-using customhost.platform.API.GuestExperience.Domain.Repositories;
+using customhost_backend.GuestExperience.Domain.Model.Aggregates;
+using customhost_backend.GuestExperience.Domain.Repositories;
 using customhost_backend.Shared.Domain.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
-namespace customhost.platform.API.GuestExperience.Interfaces.REST;
+namespace customhost_backend.GuestExperience.Interfaces.REST;
 
 [ApiController]
 [Route("api/v1/[controller]")]

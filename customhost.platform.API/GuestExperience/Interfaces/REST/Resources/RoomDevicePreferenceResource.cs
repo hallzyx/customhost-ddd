@@ -1,4 +1,4 @@
-namespace customhost.platform.API.GuestExperience.Interfaces.REST.Resources;
+namespace customhost_backend.GuestExperience.Interfaces.REST.Resources;
 
 /// <summary>
 /// Room Device Preference resource for API responses

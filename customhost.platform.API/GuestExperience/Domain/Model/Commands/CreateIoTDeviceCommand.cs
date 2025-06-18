@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace customhost.platform.API.GuestExperience.Domain.Model.Commands;
+namespace customhost_backend.GuestExperience.Domain.Model.Commands;
 
 /// <summary>
 /// Command to create a new IoT device

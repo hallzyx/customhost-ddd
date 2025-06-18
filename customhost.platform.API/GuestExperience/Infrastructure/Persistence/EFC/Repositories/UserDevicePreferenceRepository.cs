@@ -1,10 +1,10 @@
-using customhost.platform.API.GuestExperience.Domain.Model.Aggregates;
-using customhost.platform.API.GuestExperience.Domain.Repositories;
+using customhost_backend.GuestExperience.Domain.Model.Aggregates;
+using customhost_backend.GuestExperience.Domain.Repositories;
 using customhost_backend.Shared.Infrastructure.Persistence.EFC.Configuration;
 using customhost_backend.Shared.Infrastructure.Persistence.EFC.Repositories;
 using Microsoft.EntityFrameworkCore;
 
-namespace customhost.platform.API.GuestExperience.Infrastructure.Persistence.EFC.Repositories;
+namespace customhost_backend.GuestExperience.Infrastructure.Persistence.EFC.Repositories;
 
 /// <summary>
 /// User Device Preference repository implementation using Entity Framework Core

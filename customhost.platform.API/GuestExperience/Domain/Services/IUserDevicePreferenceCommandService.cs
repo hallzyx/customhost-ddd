@@ -1,7 +1,7 @@
-using customhost.platform.API.GuestExperience.Domain.Model.Aggregates;
-using customhost.platform.API.GuestExperience.Domain.Model.Commands;
+using customhost_backend.GuestExperience.Domain.Model.Aggregates;
+using customhost_backend.GuestExperience.Domain.Model.Commands;
 
-namespace customhost.platform.API.GuestExperience.Domain.Services;
+namespace customhost_backend.GuestExperience.Domain.Services;
 
 /// <summary>
 /// User Device Preference command service interface

@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace customhost.platform.API.GuestExperience.Domain.Model.Queries;
+namespace customhost_backend.GuestExperience.Domain.Model.Queries;
 
 /// <summary>
 /// Query to get a User Device Preference by Id

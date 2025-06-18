@@ -1,4 +1,4 @@
-namespace customhost.platform.API.GuestExperience.Interfaces.REST.Resources;
+namespace customhost_backend.GuestExperience.Interfaces.REST.Resources;
 
 /// <summary>
 /// IoT Device resource for API responses
