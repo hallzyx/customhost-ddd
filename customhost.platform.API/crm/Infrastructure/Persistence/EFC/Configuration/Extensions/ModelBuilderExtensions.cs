@@ -99,6 +99,10 @@ public static class ModelBuilderExtensions
         builder.Entity<customhost_backend.profiles.Domain.Models.Aggregates.User>().Property(u => u.CreatedAt).IsRequired().HasColumnType("datetime");
         builder.Entity<customhost_backend.profiles.Domain.Models.Aggregates.User>().HasIndex(u => u.Email).IsUnique();
         builder.Entity<customhost_backend.profiles.Domain.Models.Aggregates.User>().ToTable("users");
+        
+        // Analytics Bounded Context
+        builder.ApplyConfiguration(new customhost_backend.analytics.Infrastructure.Persistence.EFC.Configuration.AnalyticsSnapshotConfiguration());
+        builder.ApplyConfiguration(new customhost_backend.analytics.Infrastructure.Persistence.EFC.Configuration.MetricDataConfiguration());
 
     }
 }

@@ -24,6 +24,12 @@ using customhost_backend.profiles.Domain.Services;
 using customhost_backend.profiles.Application.Internal.CommandServices;
 using customhost_backend.profiles.Application.Internal.QueryServices;
 using customhost_backend.profiles.Infrastructure.Persistence.EFC.Repositories;
+using customhost_backend.analytics.Domain.Repositories;
+using customhost_backend.analytics.Domain.Services;
+using customhost_backend.analytics.Domain.Services.External;
+using customhost_backend.analytics.Application.Internal.QueryServices;
+using customhost_backend.analytics.Infrastructure.Persistence.EFC.Repositories;
+using customhost_backend.analytics.Infrastructure.ACL.External;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -106,6 +112,20 @@ builder.Services.AddScoped<IPaymentQueryService, PaymentQueryService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserCommandService, UserCommandService>();
 builder.Services.AddScoped<IUserQueryService, UserQueryService>();
+
+// Analytics Bounded Context
+// Repositories
+builder.Services.AddScoped<IAnalyticsSnapshotRepository, AnalyticsSnapshotRepository>();
+builder.Services.AddScoped<IMetricDataRepository, MetricDataRepository>();
+
+// Query Services
+builder.Services.AddScoped<IAnalyticsSnapshotQueryService, AnalyticsSnapshotQueryService>();
+builder.Services.AddScoped<IAnalyticsMetricQueryService, AnalyticsMetricQueryService>();
+
+// ACL Facades
+builder.Services.AddScoped<IGuestExperienceContextFacade, GuestExperienceContextFacade>();
+builder.Services.AddScoped<ICrmContextFacade, CrmContextFacade>();
+builder.Services.AddScoped<IBillingsContextFacade, BillingsContextFacade>();
 
 // GuestExperience Bounded Context
 // Repositories
