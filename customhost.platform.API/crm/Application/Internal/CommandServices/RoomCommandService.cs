@@ -6,24 +6,76 @@ using customhost_backend.Shared.Domain.Repositories;
 
 namespace customhost_backend.crm.Application.Internal.CommandServices;
 
-public class RoomCommandService
-(IRoomRespository roomRepository, IUnitOfWork unitOfWork)
-: IRoomCommandService
+/// <summary>
+/// Room Command Service Implementation
+/// </summary>
+public class RoomCommandService(
+    IRoomRepository roomRepository, 
+    IUnitOfWork unitOfWork)
+    : IRoomCommandService
 {
+    /// <inheritdoc />
     public async Task<Room?> Handle(CreateRoomCommand command)
     {
-        
-        var certainRoom = await roomRepository.FindRoomsByRoomNameAsync(command.RoomNumber);
+        // Check if room number already exists in the hotel
+        if (await roomRepository.ExistsByRoomNumberAndHotelIdAsync(command.RoomNumber, command.HotelId))
+        {
+            return null; // Room already exists
+        }
 
-        if (certainRoom != null)
+        try
+        {
+            var room = new Room(command);
+            await roomRepository.AddAsync(room);
+            await unitOfWork.CompleteAsync();
+            return room;
+        }
+        catch (Exception)
         {
             return null;
         }
-        var room = new Room(command);
-        await roomRepository.AddAsync(room);
-        await unitOfWork.CompleteAsync();
-        return room;
-        }
-    
-}
+    }
 
+    /// <inheritdoc />
+    public async Task<Room?> Handle(UpdateRoomCommand command)
+    {
+        try
+        {
+            var room = await roomRepository.FindByIdAsync(command.Id);
+            if (room == null) return null;
+
+            // Check if the new room number conflicts with existing rooms (excluding current room)
+            if (await roomRepository.ExistsByRoomNumberAndHotelIdAsync(command.RoomNumber, command.HotelId, command.Id))
+            {
+                return null; // Room number conflict
+            }
+
+            room.UpdateRoom(command);
+            roomRepository.Update(room);
+            await unitOfWork.CompleteAsync();
+            return room;
+        }
+        catch (Exception)
+        {
+            return null;
+        }
+    }
+
+    /// <inheritdoc />
+    public async Task<bool> Handle(DeleteRoomCommand command)
+    {
+        try
+        {
+            var room = await roomRepository.FindByIdAsync(command.Id);
+            if (room == null) return false;
+
+            roomRepository.Remove(room);
+            await unitOfWork.CompleteAsync();
+            return true;
+        }
+        catch (Exception)
+        {
+            return false;
+        }
+    }
+}

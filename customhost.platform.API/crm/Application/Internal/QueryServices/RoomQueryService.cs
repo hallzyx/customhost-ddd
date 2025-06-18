@@ -1,22 +1,35 @@
 using customhost_backend.crm.Domain.Models.Aggregates;
-using customhost_backend.crm.Domain.Models.Queries;
 using customhost_backend.crm.Domain.Repositories;
 using customhost_backend.crm.Domain.Services;
-using customhost_backend.Shared.Domain.Repositories;
 
 namespace customhost_backend.crm.Application.Internal.QueryServices;
 
-public class RoomQueryService
-(IRoomRespository roomRepository, IUnitOfWork unitOfWork)
-: IRoomQueryService
+/// <summary>
+/// Room Query Service Implementation
+/// </summary>
+public class RoomQueryService(IRoomRepository roomRepository) : IRoomQueryService
 {
-    public Task<Room?> Handle(GetHotelByRoomNameQuery query)
+    /// <inheritdoc />
+    public async Task<IEnumerable<Room>> GetAllAsync()
     {
-        throw new NotImplementedException();
+        return await roomRepository.ListAsync();
     }
 
-    public Task<IEnumerable<Room>> Handle()
+    /// <inheritdoc />
+    public async Task<Room?> GetByIdAsync(int id)
     {
-        return roomRepository.ListAsync();
+        return await roomRepository.FindByIdAsync(id);
+    }
+
+    /// <inheritdoc />
+    public async Task<IEnumerable<Room>> GetByHotelIdAsync(int hotelId)
+    {
+        return await roomRepository.FindByHotelIdAsync(hotelId);
+    }
+
+    /// <inheritdoc />
+    public async Task<Room?> GetByRoomNumberAsync(int roomNumber)
+    {
+        return await roomRepository.FindByRoomNumberAsync(roomNumber);
     }
 }

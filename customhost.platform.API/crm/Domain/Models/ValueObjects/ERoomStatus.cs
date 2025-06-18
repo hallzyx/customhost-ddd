@@ -4,4 +4,6 @@ public enum ERoomStatus
 {
     Available,
     Occupied,
+    Cleaning,
+    Maintenance
 }

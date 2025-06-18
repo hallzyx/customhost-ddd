@@ -71,7 +71,7 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IHotelRepository, HotelRepository>();
 builder.Services.AddScoped<IBookingRepository, BookingRepository>();
 builder.Services.AddScoped<IStaffMemberRepository, StaffMemberRepository>();
-builder.Services.AddScoped<IRoomRespository, RoomRepository>();
+builder.Services.AddScoped<IRoomRepository, RoomRepository>();
 builder.Services.AddScoped<IServiceRequestRepository, ServiceRequestRepository>();
 builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
 builder.Services.AddScoped<IHotelCommandService, HotelCommandService>();

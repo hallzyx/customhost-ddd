@@ -3,21 +3,36 @@ using customhost_backend.crm.Interfaces.REST.Resources;
 
 namespace customhost_backend.crm.Interfaces.REST.Transform;
 
-public static class CreateRoomResourceFromEntityAssembler
+/// <summary>
+/// Assembler to transform room entity to room resource
+/// </summary>
+public static class RoomResourceFromEntityAssembler
 {
+    /// <summary>
+    /// Transform room entity to room resource
+    /// </summary>
+    /// <param name="room">Room entity</param>
+    /// <returns>Room resource</returns>
     public static RoomResource ToResourceFromEntity(Room room)
     {
         return new RoomResource(
             room.Id,
-            room.Status,
             room.RoomNumber,
-            room.Type,
-            room.HotelId
+            room.Status.ToString(),
+            room.Type.ToString(),
+            room.HotelId,
+            room.Price,
+            room.Floor
         );
     }
 
-    public static List<RoomResource> ToResourcesFromEntities(IEnumerable<Room> rooms)
+    /// <summary>
+    /// Transform room entities to room resources
+    /// </summary>
+    /// <param name="rooms">Room entities</param>
+    /// <returns>Room resources</returns>
+    public static IEnumerable<RoomResource> ToResourceFromEntity(IEnumerable<Room> rooms)
     {
-        return rooms.Select(room => ToResourceFromEntity(room)).ToList();
+        return rooms.Select(ToResourceFromEntity);
     }
 }

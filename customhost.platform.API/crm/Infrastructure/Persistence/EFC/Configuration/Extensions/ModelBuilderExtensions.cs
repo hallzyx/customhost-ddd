@@ -36,14 +36,17 @@ public static class ModelBuilderExtensions
         
         // Specify table name explicitly
         builder.Entity<Booking>().ToTable("bookings");
-        
-        // Room
+          // Room
         builder.Entity<Room>().HasKey(r => r.Id);
         builder.Entity<Room>().Property(r => r.Id).IsRequired().ValueGeneratedOnAdd();
         builder.Entity<Room>().Property(r => r.RoomNumber).IsRequired();
         builder.Entity<Room>().Property(r => r.Status).IsRequired().HasConversion<string>();
         builder.Entity<Room>().Property(r => r.Type).IsRequired().HasConversion<string>();
         builder.Entity<Room>().Property(r => r.HotelId).IsRequired();
+        builder.Entity<Room>().Property(r => r.Price).IsRequired().HasColumnType("decimal(18,2)");
+        builder.Entity<Room>().Property(r => r.Floor).IsRequired();
+        // Specify table name explicitly
+        builder.Entity<Room>().ToTable("rooms");
 
         // RoomAudit
         builder.Entity<RoomAudit>().HasKey(nameof(RoomAudit.CreatedDate), nameof(RoomAudit.UpdatedDate));

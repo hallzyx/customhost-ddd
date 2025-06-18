@@ -3,9 +3,9 @@ using System.ComponentModel.DataAnnotations;
 namespace customhost_backend.crm.Interfaces.REST.Resources;
 
 /// <summary>
-/// Create Room Resource
+/// Update Room Resource
 /// </summary>
-public record CreateRoomResource
+public record UpdateRoomResource
 {
     [Required(ErrorMessage = "Room number is required.")]
     [Range(100, 999, ErrorMessage = "Room number must be between 100 and 999.")]

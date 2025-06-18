@@ -5,16 +5,17 @@ using customhost_backend.crm.Interfaces.REST.Resources;
 namespace customhost_backend.crm.Interfaces.REST.Transform;
 
 /// <summary>
-/// Assembler to transform create room resource to create room command
+/// Assembler to transform update room resource to update room command
 /// </summary>
-public static class CreateRoomCommandFromResourceAssembler
+public static class UpdateRoomCommandFromResourceAssembler
 {
     /// <summary>
-    /// Transform create room resource to create room command
+    /// Transform update room resource to update room command
     /// </summary>
-    /// <param name="resource">Create room resource</param>
-    /// <returns>Create room command</returns>
-    public static CreateRoomCommand ToCommandFromResource(CreateRoomResource resource)
+    /// <param name="id">Room ID</param>
+    /// <param name="resource">Update room resource</param>
+    /// <returns>Update room command</returns>
+    public static UpdateRoomCommand ToCommandFromResource(int id, UpdateRoomResource resource)
     {
         // Parse enums from string
         if (!Enum.TryParse<ERoomStatus>(resource.Status, out var status))
@@ -23,7 +24,8 @@ public static class CreateRoomCommandFromResourceAssembler
         if (!Enum.TryParse<ERoomType>(resource.Type, out var type))
             throw new ArgumentException($"Invalid room type: {resource.Type}");
 
-        return new CreateRoomCommand(
+        return new UpdateRoomCommand(
+            id,
             resource.RoomNumber,
             status,
             type,
