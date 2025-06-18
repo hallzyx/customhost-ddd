@@ -62,17 +62,19 @@ public static class ModelBuilderExtensions
         builder.Entity<ServiceRequest>().Property(s => s.AsignedTo).IsRequired();
         builder.Entity<ServiceRequest>().Property(s => s.CreatedAt).IsRequired().HasColumnType("datetime");
         builder.Entity<ServiceRequest>().Property(s => s.CompleteAt).HasColumnType("datetime").IsRequired(false);
-        
-        // StaffMember
+          // StaffMember
         builder.Entity<StaffMember>().HasKey(s => s.Id);
         builder.Entity<StaffMember>().Property(s => s.Id).IsRequired().ValueGeneratedOnAdd();
         builder.Entity<StaffMember>().Property(s => s.HotelId).IsRequired();
         builder.Entity<StaffMember>().Property(s => s.FirstName).IsRequired().HasMaxLength(100);
         builder.Entity<StaffMember>().Property(s => s.LastName).IsRequired().HasMaxLength(100);
-        builder.Entity<StaffMember>().Property(s => s.Email).IsRequired().HasMaxLength(150);
-        builder.Entity<StaffMember>().Property(s => s.PhoneNumber).IsRequired().HasMaxLength(20);
-        builder.Entity<StaffMember>().Property(s => s.Department).IsRequired().HasMaxLength(100);
+        builder.Entity<StaffMember>().Property(s => s.Email).IsRequired().HasMaxLength(255);
+        builder.Entity<StaffMember>().Property(s => s.Phone).IsRequired().HasMaxLength(20);
+        builder.Entity<StaffMember>().Property(s => s.Status).IsRequired().HasConversion<string>();
+        builder.Entity<StaffMember>().Property(s => s.Department).IsRequired().HasConversion<string>();
         builder.Entity<StaffMember>().Property(s => s.CreatedAt).IsRequired().HasColumnType("datetime");
+        // Specify table name explicitly
+        builder.Entity<StaffMember>().ToTable("staff_members");
 
     }
 }

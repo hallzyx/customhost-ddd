@@ -2,20 +2,20 @@ using customhost_backend.crm.Domain.Models.ValueObjects;
 
 namespace customhost_backend.crm.Domain.Models.Commands;
 
-public record CreateStaffMemberCommand
+public record UpdateStaffMemberCommand
 {
-    public int HotelId { get; set; }
+    public int Id { get; set; }
     public string FirstName { get; set; }
     public string LastName { get; set; }
     public string Email { get; set; }
     public string Phone { get; set; }
     public Department Department { get; set; }
 
-    public CreateStaffMemberCommand(int hotelId, string firstName, string lastName, string email, string phone, Department department)
+    public UpdateStaffMemberCommand(int id, string firstName, string lastName, string email, string phone, Department department)
     {
-        if (hotelId < 1)
+        if (id < 1)
         {
-            throw new ArgumentException("Hotel ID must be a positive integer.", nameof(hotelId));
+            throw new ArgumentException("ID must be a positive integer.", nameof(id));
         }
         if (string.IsNullOrWhiteSpace(firstName))
         {
@@ -34,7 +34,7 @@ public record CreateStaffMemberCommand
             throw new ArgumentException("Phone number must be at least 9 characters long.", nameof(phone));
         }
         
-        HotelId = hotelId;
+        Id = id;
         FirstName = firstName;
         LastName = lastName;
         Email = email;
