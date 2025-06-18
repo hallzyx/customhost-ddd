@@ -16,12 +16,11 @@ public class Booking
     public int UserId { get; private set; }
     public int HotelId { get; private set; }
     public int RoomId { get; private set; }
-    public DateTime CheckInDate { get; private set; }
-    public DateTime CheckOutDate { get; private set; }
+    public DateTime CheckInDate { get; private set; }    public DateTime CheckOutDate { get; private set; }
     public BookingStatus Status { get; private set; }
     public decimal TotalPrice { get; private set; }
     public PaymentStatus PaymentStatus { get; private set; }
-    public string SpecialRequests { get; private set; }
+    public string? SpecialRequests { get; private set; }
     public DateTime CreatedAt { get; private set; }
     public string Preferences { get; private set; } // JSON string for flexibility
     public string AppliedDevicePreferences { get; private set; } // JSON string for device preferences
@@ -29,11 +28,10 @@ public class Booking
     public bool IsActive => Status != BookingStatus.Cancelled && Status != BookingStatus.NoShow;
     public bool IsCurrentlyCheckedIn => Status == BookingStatus.CheckedIn;
     public int NumberOfNights => (CheckOutDate.Date - CheckInDate.Date).Days;
-    
-    // For EF Core
+      // For EF Core
     protected Booking() 
     {
-        SpecialRequests = string.Empty;
+        SpecialRequests = null;
         Preferences = "{}";
         AppliedDevicePreferences = "[]";
         Status = BookingStatus.Pending;
@@ -50,10 +48,9 @@ public class Booking
         RoomId = roomId;
         CheckInDate = checkInDate;
         CheckOutDate = checkOutDate;
-        TotalPrice = totalPrice;
-        Status = BookingStatus.Pending;
+        TotalPrice = totalPrice;        Status = BookingStatus.Pending;
         PaymentStatus = PaymentStatus.Pending;
-        SpecialRequests = specialRequests ?? string.Empty;
+        SpecialRequests = specialRequests;
         CreatedAt = DateTime.UtcNow;
         Preferences = "{}";
         AppliedDevicePreferences = "[]";
@@ -64,14 +61,13 @@ public class Booking
         ValidateDates(command.CheckInDate, command.CheckOutDate);
         
         UserId = command.UserId;
-        HotelId = command.HotelId;
-        RoomId = command.RoomId;
+        HotelId = command.HotelId;        RoomId = command.RoomId;
         CheckInDate = command.CheckInDate;
         CheckOutDate = command.CheckOutDate;
         TotalPrice = command.TotalPrice;
         Status = BookingStatus.Pending;
         PaymentStatus = PaymentStatus.Pending;
-        SpecialRequests = command.SpecialRequests ?? string.Empty;
+        SpecialRequests = command.SpecialRequests;
         CreatedAt = DateTime.UtcNow;
         Preferences = command.Preferences ?? "{}";
         AppliedDevicePreferences = command.AppliedDevicePreferences ?? "[]";
@@ -85,9 +81,8 @@ public class Booking
         ValidateDates(checkInDate, checkOutDate);
         
         CheckInDate = checkInDate;
-        CheckOutDate = checkOutDate;
-        TotalPrice = totalPrice;
-        SpecialRequests = specialRequests ?? SpecialRequests;
+        CheckOutDate = checkOutDate;        TotalPrice = totalPrice;
+        SpecialRequests = specialRequests;
     }
     
     public void Confirm()

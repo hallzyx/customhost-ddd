@@ -25,11 +25,10 @@ public static class ModelBuilderExtensions
         builder.Entity<Booking>().Property(b => b.HotelId).IsRequired();
         builder.Entity<Booking>().Property(b => b.RoomId).IsRequired();
         builder.Entity<Booking>().Property(b => b.CheckInDate).IsRequired().HasColumnType("datetime");
-        builder.Entity<Booking>().Property(b => b.CheckOutDate).IsRequired().HasColumnType("datetime");
-        builder.Entity<Booking>().Property(b => b.Status).IsRequired().HasConversion<string>();
+        builder.Entity<Booking>().Property(b => b.CheckOutDate).IsRequired().HasColumnType("datetime");        builder.Entity<Booking>().Property(b => b.Status).IsRequired().HasConversion<string>();
         builder.Entity<Booking>().Property(b => b.TotalPrice).IsRequired().HasColumnType("decimal(18,2)");
         builder.Entity<Booking>().Property(b => b.PaymentStatus).IsRequired().HasConversion<string>();
-        builder.Entity<Booking>().Property(b => b.SpecialRequests).HasMaxLength(1000);
+        builder.Entity<Booking>().Property(b => b.SpecialRequests).HasMaxLength(1000).IsRequired(false);
         builder.Entity<Booking>().Property(b => b.CreatedAt).IsRequired().HasColumnType("datetime");
         builder.Entity<Booking>().Property(b => b.Preferences).HasColumnType("text");
         builder.Entity<Booking>().Property(b => b.AppliedDevicePreferences).HasColumnType("text");
