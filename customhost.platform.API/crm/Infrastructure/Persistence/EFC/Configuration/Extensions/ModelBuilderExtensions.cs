@@ -67,19 +67,24 @@ public static class ModelBuilderExtensions
         builder.Entity<ServiceRequest>().Property(s => s.CompletedAt).HasColumnType("datetime").IsRequired(false);
         builder.Entity<ServiceRequest>().Property(s => s.History).IsRequired().HasColumnType("text");
         // Specify table name explicitly
-        builder.Entity<ServiceRequest>().ToTable("service_requests");// StaffMember
-        builder.Entity<StaffMember>().HasKey(s => s.Id);
-        builder.Entity<StaffMember>().Property(s => s.Id).IsRequired().ValueGeneratedOnAdd();
-        builder.Entity<StaffMember>().Property(s => s.HotelId).IsRequired();
-        builder.Entity<StaffMember>().Property(s => s.FirstName).IsRequired().HasMaxLength(100);
-        builder.Entity<StaffMember>().Property(s => s.LastName).IsRequired().HasMaxLength(100);
-        builder.Entity<StaffMember>().Property(s => s.Email).IsRequired().HasMaxLength(255);
-        builder.Entity<StaffMember>().Property(s => s.Phone).IsRequired().HasMaxLength(20);
-        builder.Entity<StaffMember>().Property(s => s.Status).IsRequired().HasConversion<string>();
-        builder.Entity<StaffMember>().Property(s => s.Department).IsRequired().HasConversion<string>();
-        builder.Entity<StaffMember>().Property(s => s.CreatedAt).IsRequired().HasColumnType("datetime");
-        // Specify table name explicitly
-        builder.Entity<StaffMember>().ToTable("staff_members");
+        builder.Entity<ServiceRequest>().ToTable("service_requests");
+        
+        // Payment
+        builder.Entity<customhost_backend.billings.Domain.Models.Aggregates.Payment>().HasKey(p => p.Id);
+        builder.Entity<customhost_backend.billings.Domain.Models.Aggregates.Payment>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
+        builder.Entity<customhost_backend.billings.Domain.Models.Aggregates.Payment>().Property(p => p.BookingId).IsRequired(false);
+        builder.Entity<customhost_backend.billings.Domain.Models.Aggregates.Payment>().Property(p => p.UserId).IsRequired();
+        builder.Entity<customhost_backend.billings.Domain.Models.Aggregates.Payment>().Property(p => p.HotelId).IsRequired();
+        builder.Entity<customhost_backend.billings.Domain.Models.Aggregates.Payment>().Property(p => p.RoomId).IsRequired();
+        builder.Entity<customhost_backend.billings.Domain.Models.Aggregates.Payment>().Property(p => p.Amount).IsRequired().HasColumnType("decimal(18,2)");
+        builder.Entity<customhost_backend.billings.Domain.Models.Aggregates.Payment>().Property(p => p.Currency).IsRequired().HasMaxLength(3);
+        builder.Entity<customhost_backend.billings.Domain.Models.Aggregates.Payment>().Property(p => p.CheckInDate).HasColumnType("datetime").IsRequired(false);
+        builder.Entity<customhost_backend.billings.Domain.Models.Aggregates.Payment>().Property(p => p.CheckOutDate).HasColumnType("datetime").IsRequired(false);
+        builder.Entity<customhost_backend.billings.Domain.Models.Aggregates.Payment>().Property(p => p.PaymentMethod).IsRequired().HasConversion<string>();
+        builder.Entity<customhost_backend.billings.Domain.Models.Aggregates.Payment>().Property(p => p.Status).IsRequired().HasConversion<string>();
+        builder.Entity<customhost_backend.billings.Domain.Models.Aggregates.Payment>().Property(p => p.PaymentDate).HasColumnType("datetime").IsRequired(false);
+        builder.Entity<customhost_backend.billings.Domain.Models.Aggregates.Payment>().Property(p => p.CreatedAt).IsRequired().HasColumnType("datetime");
+        builder.Entity<customhost_backend.billings.Domain.Models.Aggregates.Payment>().ToTable("payments");
 
         // Notification
         builder.Entity<Notification>().HasKey(n => n.Id);
