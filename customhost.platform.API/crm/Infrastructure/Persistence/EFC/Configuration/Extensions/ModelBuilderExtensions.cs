@@ -85,18 +85,20 @@ public static class ModelBuilderExtensions
         builder.Entity<customhost_backend.billings.Domain.Models.Aggregates.Payment>().Property(p => p.PaymentDate).HasColumnType("datetime").IsRequired(false);
         builder.Entity<customhost_backend.billings.Domain.Models.Aggregates.Payment>().Property(p => p.CreatedAt).IsRequired().HasColumnType("datetime");
         builder.Entity<customhost_backend.billings.Domain.Models.Aggregates.Payment>().ToTable("payments");
-
-        // Notification
-        builder.Entity<Notification>().HasKey(n => n.Id);
-        builder.Entity<Notification>().Property(n => n.Id).IsRequired().ValueGeneratedOnAdd();
-        builder.Entity<Notification>().Property(n => n.UserId).IsRequired();
-        builder.Entity<Notification>().Property(n => n.Title).IsRequired().HasMaxLength(200);
-        builder.Entity<Notification>().Property(n => n.Message).IsRequired().HasMaxLength(1000);
-        builder.Entity<Notification>().Property(n => n.Type).IsRequired().HasMaxLength(50);
-        builder.Entity<Notification>().Property(n => n.Read).IsRequired();
-        builder.Entity<Notification>().Property(n => n.CreatedAt).IsRequired().HasColumnType("datetime");
-        // Specify table name explicitly
-        builder.Entity<Notification>().ToTable("notifications");
+        
+        // User
+        builder.Entity<customhost_backend.profiles.Domain.Models.Aggregates.User>().HasKey(u => u.Id);
+        builder.Entity<customhost_backend.profiles.Domain.Models.Aggregates.User>().Property(u => u.Id).IsRequired().ValueGeneratedOnAdd();
+        builder.Entity<customhost_backend.profiles.Domain.Models.Aggregates.User>().Property(u => u.HotelId).IsRequired();
+        builder.Entity<customhost_backend.profiles.Domain.Models.Aggregates.User>().Property(u => u.FirstName).IsRequired().HasMaxLength(100);
+        builder.Entity<customhost_backend.profiles.Domain.Models.Aggregates.User>().Property(u => u.LastName).IsRequired().HasMaxLength(100);
+        builder.Entity<customhost_backend.profiles.Domain.Models.Aggregates.User>().Property(u => u.Email).IsRequired().HasMaxLength(255);
+        builder.Entity<customhost_backend.profiles.Domain.Models.Aggregates.User>().Property(u => u.PasswordHash).IsRequired().HasMaxLength(500);
+        builder.Entity<customhost_backend.profiles.Domain.Models.Aggregates.User>().Property(u => u.Phone).IsRequired().HasMaxLength(20);
+        builder.Entity<customhost_backend.profiles.Domain.Models.Aggregates.User>().Property(u => u.Role).IsRequired().HasConversion<string>();
+        builder.Entity<customhost_backend.profiles.Domain.Models.Aggregates.User>().Property(u => u.CreatedAt).IsRequired().HasColumnType("datetime");
+        builder.Entity<customhost_backend.profiles.Domain.Models.Aggregates.User>().HasIndex(u => u.Email).IsUnique();
+        builder.Entity<customhost_backend.profiles.Domain.Models.Aggregates.User>().ToTable("users");
 
     }
 }

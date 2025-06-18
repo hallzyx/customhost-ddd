@@ -19,6 +19,11 @@ using customhost_backend.billings.Domain.Services;
 using customhost_backend.billings.Application.Internal.CommandServices;
 using customhost_backend.billings.Application.Internal.QueryServices;
 using customhost_backend.billings.Infrastructure.Persistence.EFC.Repositories;
+using customhost_backend.profiles.Domain.Repositories;
+using customhost_backend.profiles.Domain.Services;
+using customhost_backend.profiles.Application.Internal.CommandServices;
+using customhost_backend.profiles.Application.Internal.QueryServices;
+using customhost_backend.profiles.Infrastructure.Persistence.EFC.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -96,6 +101,11 @@ builder.Services.AddScoped<INotificationQueryService, NotificationQueryService>(
 builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
 builder.Services.AddScoped<IPaymentCommandService, PaymentCommandService>();
 builder.Services.AddScoped<IPaymentQueryService, PaymentQueryService>();
+
+// Profiles Bounded Context
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUserCommandService, UserCommandService>();
+builder.Services.AddScoped<IUserQueryService, UserQueryService>();
 
 // GuestExperience Bounded Context
 // Repositories
