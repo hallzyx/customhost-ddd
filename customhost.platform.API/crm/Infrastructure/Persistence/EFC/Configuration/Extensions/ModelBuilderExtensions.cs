@@ -51,20 +51,23 @@ public static class ModelBuilderExtensions
         // RoomAudit
         builder.Entity<RoomAudit>().HasKey(nameof(RoomAudit.CreatedDate), nameof(RoomAudit.UpdatedDate));
         builder.Entity<RoomAudit>().Property(a => a.CreatedDate).HasColumnName("CreatedAt");
-        builder.Entity<RoomAudit>().Property(a => a.UpdatedDate).HasColumnName("UpdatedAt");
-
-        // ServiceRequest
+        builder.Entity<RoomAudit>().Property(a => a.UpdatedDate).HasColumnName("UpdatedAt");        // ServiceRequest
         builder.Entity<ServiceRequest>().HasKey(s => s.Id);
         builder.Entity<ServiceRequest>().Property(s => s.Id).IsRequired().ValueGeneratedOnAdd();
         builder.Entity<ServiceRequest>().Property(s => s.UserId).IsRequired();
         builder.Entity<ServiceRequest>().Property(s => s.HotelId).IsRequired();
         builder.Entity<ServiceRequest>().Property(s => s.RoomId).IsRequired();
-        builder.Entity<ServiceRequest>().Property(s => s.Type).IsRequired().HasConversion<string>(); // Enum como string, opcional
-        builder.Entity<ServiceRequest>().Property(s => s.Description).IsRequired().HasMaxLength(500);
-        builder.Entity<ServiceRequest>().Property(s => s.Status).IsRequired().HasConversion<string>(); // Enum como string, opcional
-        builder.Entity<ServiceRequest>().Property(s => s.AsignedTo).IsRequired();
+        builder.Entity<ServiceRequest>().Property(s => s.Type).IsRequired().HasConversion<string>();
+        builder.Entity<ServiceRequest>().Property(s => s.Category).IsRequired().HasMaxLength(100);
+        builder.Entity<ServiceRequest>().Property(s => s.Description).IsRequired().HasMaxLength(1000);
+        builder.Entity<ServiceRequest>().Property(s => s.Status).IsRequired().HasConversion<string>();
+        builder.Entity<ServiceRequest>().Property(s => s.Priority).IsRequired().HasConversion<string>();
+        builder.Entity<ServiceRequest>().Property(s => s.AssignedTo).IsRequired(false);
         builder.Entity<ServiceRequest>().Property(s => s.CreatedAt).IsRequired().HasColumnType("datetime");
-        builder.Entity<ServiceRequest>().Property(s => s.CompleteAt).HasColumnType("datetime").IsRequired(false);        // StaffMember
+        builder.Entity<ServiceRequest>().Property(s => s.CompletedAt).HasColumnType("datetime").IsRequired(false);
+        builder.Entity<ServiceRequest>().Property(s => s.History).IsRequired().HasColumnType("text");
+        // Specify table name explicitly
+        builder.Entity<ServiceRequest>().ToTable("service_requests");// StaffMember
         builder.Entity<StaffMember>().HasKey(s => s.Id);
         builder.Entity<StaffMember>().Property(s => s.Id).IsRequired().ValueGeneratedOnAdd();
         builder.Entity<StaffMember>().Property(s => s.HotelId).IsRequired();

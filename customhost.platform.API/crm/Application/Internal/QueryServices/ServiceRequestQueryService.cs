@@ -1,16 +1,47 @@
 using customhost_backend.crm.Domain.Models.Aggregates;
+using customhost_backend.crm.Domain.Models.ValueObjects;
 using customhost_backend.crm.Domain.Repositories;
 using customhost_backend.crm.Domain.Services;
-using customhost_backend.Shared.Domain.Repositories;
 
 namespace customhost_backend.crm.Application.Internal.QueryServices;
 
-public class ServiceRequestQueryService
-(IServiceRequestRepository serviceRequestRepository, IUnitOfWork unitOfWork)
-: IServiceRequestQueryService
+/// <summary>
+/// Service Request Query Service Implementation
+/// </summary>
+public class ServiceRequestQueryService(IServiceRequestRepository serviceRequestRepository) 
+    : IServiceRequestQueryService
 {
-    public Task<IEnumerable<ServiceRequest>> Handle()
+    /// <inheritdoc />
+    public async Task<IEnumerable<ServiceRequest>> GetAllAsync()
     {
-        return serviceRequestRepository.ListAsync();
+        return await serviceRequestRepository.ListAsync();
+    }
+
+    /// <inheritdoc />
+    public async Task<ServiceRequest?> GetByIdAsync(int id)
+    {
+        return await serviceRequestRepository.FindByIdAsync(id);
+    }
+
+    /// <inheritdoc />
+    public async Task<IEnumerable<ServiceRequest>> GetByUserIdAsync(int userId)
+    {
+        return await serviceRequestRepository.FindByUserIdAsync(userId);
+    }
+
+    /// <inheritdoc />
+    public async Task<IEnumerable<ServiceRequest>> GetByHotelIdAsync(int hotelId)
+    {
+        return await serviceRequestRepository.FindByHotelIdAsync(hotelId);
+    }
+
+    /// <inheritdoc />
+    public async Task<IEnumerable<ServiceRequest>> GetByStatusAsync(string status)
+    {
+        if (Enum.TryParse<EServiceRequestStatus>(status, out var statusEnum))
+        {
+            return await serviceRequestRepository.FindByStatusAsync(statusEnum);
+        }
+        return new List<ServiceRequest>();
     }
 }

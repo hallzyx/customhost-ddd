@@ -5,5 +5,6 @@ public enum EServiceRequestStatus
     Open,
     InProgress,
     Resolved,
-    Cancelled
+    Cancelled,
+    Completed
 }
