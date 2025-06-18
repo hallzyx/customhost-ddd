@@ -13,6 +13,7 @@ using customhost_backend.crm.Application.Internal.CommandServices;
 using customhost_backend.crm.Application.Internal.QueryServices;
 using customhost_backend.crm.Infrastructure.Persistence.EFC.Repositories;
 using customhost_backend.crm.Infrastructure.Repositories;
+using customhost_backend.crm.Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -72,6 +73,7 @@ builder.Services.AddScoped<IBookingRepository, BookingRepository>();
 builder.Services.AddScoped<IStaffMemberRepository, StaffMemberRepository>();
 builder.Services.AddScoped<IRoomRespository, RoomRepository>();
 builder.Services.AddScoped<IServiceRequestRepository, ServiceRequestRepository>();
+builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
 builder.Services.AddScoped<IHotelCommandService, HotelCommandService>();
 builder.Services.AddScoped<IHotelQueryService, HotelQueryService>();
 builder.Services.AddScoped<IBookingCommandService, BookingCommandService>();
@@ -82,6 +84,8 @@ builder.Services.AddScoped<IRoomCommandService, RoomCommandService>();
 builder.Services.AddScoped<IRoomQueryService, RoomQueryService>();
 builder.Services.AddScoped<IServiceRequestCommandService, ServiceRequestCommandService>();
 builder.Services.AddScoped<IServiceRequestQueryService, ServiceRequestQueryService>();
+builder.Services.AddScoped<INotificationCommandService, NotificationCommandService>();
+builder.Services.AddScoped<INotificationQueryService, NotificationQueryService>();
 
 // GuestExperience Bounded Context
 // Repositories

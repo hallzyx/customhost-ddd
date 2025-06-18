@@ -61,8 +61,7 @@ public static class ModelBuilderExtensions
         builder.Entity<ServiceRequest>().Property(s => s.Status).IsRequired().HasConversion<string>(); // Enum como string, opcional
         builder.Entity<ServiceRequest>().Property(s => s.AsignedTo).IsRequired();
         builder.Entity<ServiceRequest>().Property(s => s.CreatedAt).IsRequired().HasColumnType("datetime");
-        builder.Entity<ServiceRequest>().Property(s => s.CompleteAt).HasColumnType("datetime").IsRequired(false);
-          // StaffMember
+        builder.Entity<ServiceRequest>().Property(s => s.CompleteAt).HasColumnType("datetime").IsRequired(false);        // StaffMember
         builder.Entity<StaffMember>().HasKey(s => s.Id);
         builder.Entity<StaffMember>().Property(s => s.Id).IsRequired().ValueGeneratedOnAdd();
         builder.Entity<StaffMember>().Property(s => s.HotelId).IsRequired();
@@ -75,6 +74,18 @@ public static class ModelBuilderExtensions
         builder.Entity<StaffMember>().Property(s => s.CreatedAt).IsRequired().HasColumnType("datetime");
         // Specify table name explicitly
         builder.Entity<StaffMember>().ToTable("staff_members");
+
+        // Notification
+        builder.Entity<Notification>().HasKey(n => n.Id);
+        builder.Entity<Notification>().Property(n => n.Id).IsRequired().ValueGeneratedOnAdd();
+        builder.Entity<Notification>().Property(n => n.UserId).IsRequired();
+        builder.Entity<Notification>().Property(n => n.Title).IsRequired().HasMaxLength(200);
+        builder.Entity<Notification>().Property(n => n.Message).IsRequired().HasMaxLength(1000);
+        builder.Entity<Notification>().Property(n => n.Type).IsRequired().HasMaxLength(50);
+        builder.Entity<Notification>().Property(n => n.Read).IsRequired();
+        builder.Entity<Notification>().Property(n => n.CreatedAt).IsRequired().HasColumnType("datetime");
+        // Specify table name explicitly
+        builder.Entity<Notification>().ToTable("notifications");
 
     }
 }

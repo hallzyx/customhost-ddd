@@ -12,11 +12,11 @@ namespace customhost_backend.Shared.Infrastructure.Persistence.EFC.Configuration
 ///     Application database context
 /// </summary>
 public class AppDbContext(DbContextOptions options) : DbContext(options)
-{
-    // CRM DbSets
+{    // CRM DbSets
     public DbSet<Hotel> Hotels { get; set; }
     public DbSet<Booking> Bookings { get; set; }
     public DbSet<StaffMember> StaffMembers { get; set; }
+    public DbSet<Notification> Notifications { get; set; }
     
     // Guest Experience DbSets
     public DbSet<IoTDevice> IoTDevices { get; set; }
