@@ -4,9 +4,21 @@ using Microsoft.EntityFrameworkCore;
 namespace customhost_backend.crm.Infrastructure.Persistence.EFC.Configuration.Extensions;
 
 public static class ModelBuilderExtensions
-{
-    public static void ApplyCrmConfiguration(this ModelBuilder builder)
-    {
+{    public static void ApplyCrmConfiguration(this ModelBuilder builder)
+    {        // Hotel
+        builder.Entity<Hotel>().HasKey(h => h.Id);
+        builder.Entity<Hotel>().Property(h => h.Id).IsRequired().ValueGeneratedOnAdd();
+        builder.Entity<Hotel>().Property(h => h.Name).IsRequired().HasMaxLength(200);
+        builder.Entity<Hotel>().Property(h => h.Address).IsRequired().HasMaxLength(500);
+        builder.Entity<Hotel>().Property(h => h.Email).IsRequired().HasMaxLength(255);
+        builder.Entity<Hotel>().Property(h => h.Phone).IsRequired().HasMaxLength(20);
+        builder.Entity<Hotel>().Property(h => h.Status).IsRequired().HasConversion<string>();
+        builder.Entity<Hotel>().Property(h => h.CreatedAt).IsRequired().HasColumnType("datetime");
+        builder.Entity<Hotel>().Property(h => h.AdminId).IsRequired();
+        
+        // Specify table name explicitly
+        builder.Entity<Hotel>().ToTable("hotels");
+        
         // Room
         builder.Entity<Room>().HasKey(r => r.Id);
         builder.Entity<Room>().Property(r => r.Id).IsRequired().ValueGeneratedOnAdd();

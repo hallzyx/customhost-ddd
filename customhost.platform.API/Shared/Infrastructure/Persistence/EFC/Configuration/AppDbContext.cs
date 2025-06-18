@@ -1,3 +1,4 @@
+using customhost_backend.crm.Domain.Models.Aggregates;
 using customhost_backend.GuestExperience.Domain.Model.Aggregates;
 using customhost_backend.GuestExperience.Infrastructure.Persistence.EFC.Configuration.Extensions;
 using customhost_backend.crm.Infrastructure.Persistence.EFC.Configuration.Extensions;
@@ -12,6 +13,9 @@ namespace customhost_backend.Shared.Infrastructure.Persistence.EFC.Configuration
 /// </summary>
 public class AppDbContext(DbContextOptions options) : DbContext(options)
 {
+    // CRM DbSets
+    public DbSet<Hotel> Hotels { get; set; }
+    
     // Guest Experience DbSets
     public DbSet<IoTDevice> IoTDevices { get; set; }
     public DbSet<RoomDevice> RoomDevices { get; set; }

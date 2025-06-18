@@ -11,6 +11,7 @@ using customhost_backend.crm.Domain.Repositories;
 using customhost_backend.crm.Domain.Services;
 using customhost_backend.crm.Application.Internal.CommandServices;
 using customhost_backend.crm.Application.Internal.QueryServices;
+using customhost_backend.crm.Infrastructure.Persistence.EFC.Repositories;
 using customhost_backend.crm.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 
@@ -66,8 +67,11 @@ builder.Services.AddSwaggerGen(options=> { options.EnableAnnotations(); });
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 // CRM Bounded Context
+builder.Services.AddScoped<IHotelRepository, HotelRepository>();
 builder.Services.AddScoped<IRoomRespository, RoomRepository>();
 builder.Services.AddScoped<IServiceRequestRepository, ServiceRequestRepository>();
+builder.Services.AddScoped<IHotelCommandService, HotelCommandService>();
+builder.Services.AddScoped<IHotelQueryService, HotelQueryService>();
 builder.Services.AddScoped<IRoomCommandService, RoomCommandService>();
 builder.Services.AddScoped<IRoomQueryService, RoomQueryService>();
 builder.Services.AddScoped<IServiceRequestCommandService, ServiceRequestCommandService>();
