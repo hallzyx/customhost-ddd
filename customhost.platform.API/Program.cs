@@ -1,4 +1,8 @@
-
+using customhost.platform.API.GuestExperience.Application.Internal.CommandServices;
+using customhost.platform.API.GuestExperience.Application.Internal.QueryServices;
+using customhost.platform.API.GuestExperience.Domain.Repositories;
+using customhost.platform.API.GuestExperience.Domain.Services;
+using customhost.platform.API.GuestExperience.Infrastructure.Persistence.EFC.Repositories;
 using customhost_backend.Shared.Infrastructure.Interfaces.ASP.Configuration;
 using customhost_backend.Shared.Infrastructure.Persistence.EFC.Configuration;
 using customhost_backend.Shared.Infrastructure.Persistence.EFC.Repositories;
@@ -20,10 +24,17 @@ builder.Services.AddControllers(options => options.Conventions.Add(new KebabCase
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
-//Add CORS Policy
+//Add CORS Policy for Frontend Integration
 
 builder.Services.AddCors(options =>
 {
+    options.AddPolicy("AllowFrontendPolicy",
+        policy => policy.WithOrigins("http://localhost:3000", "http://localhost:5173", "http://127.0.0.1:3000", "http://127.0.0.1:5173")
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            .AllowCredentials());
+    
+    // Keep AllowAll for development/testing purposes
     options.AddPolicy("AllowAllPolicy",
         policy => policy.AllowAnyOrigin()
             .AllowAnyMethod()
@@ -62,6 +73,25 @@ builder.Services.AddScoped<IRoomQueryService, RoomQueryService>();
 builder.Services.AddScoped<IServiceRequestCommandService, ServiceRequestCommandService>();
 builder.Services.AddScoped<IServiceRequestQueryService, ServiceRequestQueryService>();
 
+// GuestExperience Bounded Context
+// Repositories
+builder.Services.AddScoped<IIoTDeviceRepository, IoTDeviceRepository>();
+builder.Services.AddScoped<IRoomDeviceRepository, RoomDeviceRepository>();
+builder.Services.AddScoped<IRoomDevicePreferenceRepository, RoomDevicePreferenceRepository>();
+builder.Services.AddScoped<IUserDevicePreferenceRepository, UserDevicePreferenceRepository>();
+
+// Command Services
+builder.Services.AddScoped<IIoTDeviceCommandService, IoTDeviceCommandService>();
+builder.Services.AddScoped<IRoomDeviceCommandService, RoomDeviceCommandService>();
+builder.Services.AddScoped<IRoomDevicePreferenceCommandService, RoomDevicePreferenceCommandService>();
+builder.Services.AddScoped<IUserDevicePreferenceCommandService, UserDevicePreferenceCommandService>();
+
+// Query Services
+builder.Services.AddScoped<IIoTDeviceQueryService, IoTDeviceQueryService>();
+builder.Services.AddScoped<IRoomDeviceQueryService, RoomDeviceQueryService>();
+builder.Services.AddScoped<IRoomDevicePreferenceQueryService, RoomDevicePreferenceQueryService>();
+builder.Services.AddScoped<IUserDevicePreferenceQueryService, UserDevicePreferenceQueryService>();
+
 
 var app = builder.Build();
 
@@ -80,8 +110,15 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-// Apply CORS Policy
-app.UseCors("AllowAllPolicy");
+// Apply CORS Policy - Use specific frontend policy in production
+if (app.Environment.IsDevelopment())
+{
+    app.UseCors("AllowAllPolicy"); // More permissive for development
+}
+else
+{
+    app.UseCors("AllowFrontendPolicy"); // Restricted to frontend origins
+}
 
 app.UseHttpsRedirection();
 
