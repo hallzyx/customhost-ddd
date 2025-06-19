@@ -1,2 +1,2 @@
-[providers.dotnet]
-version = "9.0"
+[providers]
+dotnet = "9.0"
