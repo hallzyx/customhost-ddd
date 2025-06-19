@@ -34,6 +34,27 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Configuraciones críticas para producción
+if (builder.Environment.IsProduction())
+{
+    // HSTS para HTTPS obligatorio
+    builder.Services.AddHsts(options =>
+    {
+        options.Preload = true;
+        options.IncludeSubDomains = true;
+        options.MaxAge = TimeSpan.FromDays(365);
+    });
+    
+    // Redirección HTTPS
+    builder.Services.AddHttpsRedirection(options =>
+    {
+        options.HttpsPort = 443;
+    });
+}
+
+// Health Checks para monitoreo
+builder.Services.AddHealthChecks();
+
 // Add services to the container.
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 builder.Services.AddControllers(options => options.Conventions.Add(new KebabCaseRouteNamingConvention()))
@@ -46,27 +67,47 @@ builder.Services.AddControllers(options => options.Conventions.Add(new KebabCase
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
-//Add CORS Policy for Frontend Integration
+//Add CORS Policy for Frontend Integration - CONFIGURACIÓN CRÍTICA DE SEGURIDAD
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowFrontendPolicy",
-        policy => policy.WithOrigins("http://localhost:3000", "http://localhost:5173", "http://127.0.0.1:3000", "http://127.0.0.1:5173")
-            .AllowAnyMethod()
-            .AllowAnyHeader()
-            .AllowCredentials());
-    
-    // Keep AllowAll for development/testing purposes
-    options.AddPolicy("AllowAllPolicy",
-        policy => policy.AllowAnyOrigin()
-            .AllowAnyMethod()
-            .AllowAnyHeader());
+    if (builder.Environment.IsProduction())
+    {
+        // PRODUCCIÓN: CORS RESTRICTIVO - CRÍTICO PARA SEGURIDAD
+        var allowedOrigins = builder.Configuration["Cors:AllowedOrigins"]?.Split(',') 
+                            ?? throw new InvalidOperationException("CORS AllowedOrigins not configured for production");
+        
+        options.AddPolicy("ProductionCorsPolicy",
+            policy => policy.WithOrigins(allowedOrigins)
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials());
+    }
+    else
+    {
+        // DESARROLLO: Más permisivo
+        options.AddPolicy("AllowFrontendPolicy",
+            policy => policy.WithOrigins("http://localhost:3000", "http://localhost:5173", "http://127.0.0.1:3000", "http://127.0.0.1:5173")
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials());
+        
+        options.AddPolicy("AllowAllPolicy",
+            policy => policy.AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
+    }
 });
 
 
+// CONFIGURACIÓN CRÍTICA DE BASE DE DATOS
 if(connectionString== null) throw new InvalidOperationException("Connection string not found.");
 
-
+// Expandir variables de entorno en producción
+if (builder.Environment.IsProduction())
+{
+    connectionString = Environment.ExpandEnvironmentVariables(connectionString);
+}
 
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
@@ -77,10 +118,16 @@ builder.Services.AddDbContext<AppDbContext>(options =>
             .EnableDetailedErrors();
     else if (builder.Environment.IsProduction())
         options.UseMySQL(connectionString)
-            .LogTo(Console.WriteLine, LogLevel.Error);
+            .LogTo(Console.WriteLine, LogLevel.Error)
+            .EnableServiceProviderCaching()
+            .EnableSensitiveDataLogging(false); // CRÍTICO: Deshabilitar en producción
 });
 
-builder.Services.AddSwaggerGen(options=> { options.EnableAnnotations(); });
+// CRÍTICO: Swagger SOLO en desarrollo
+if (builder.Environment.IsDevelopment())
+{
+    builder.Services.AddSwaggerGen(options=> { options.EnableAnnotations(); });
+}
 
 // Dependency Injection
 
@@ -161,24 +208,38 @@ using (var scope = app.Services.CreateScope())
     context.Database.EnsureCreated();
 }
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+// CONFIGURACIÓN CRÍTICA DEL PIPELINE DE PRODUCCIÓN
+if (app.Environment.IsProduction())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
-// Apply CORS Policy - Use specific frontend policy in production
-if (app.Environment.IsDevelopment())
-{
-    app.UseCors("AllowAllPolicy"); // More permissive for development
+    // HSTS y HTTPS obligatorios en producción
+    app.UseHsts();
+    app.UseHttpsRedirection();
+      // Headers de seguridad críticos
+    app.Use(async (context, next) =>
+    {
+        context.Response.Headers["X-Frame-Options"] = "DENY";
+        context.Response.Headers["X-Content-Type-Options"] = "nosniff";
+        context.Response.Headers["Referrer-Policy"] = "strict-origin-when-cross-origin";
+        context.Response.Headers["X-XSS-Protection"] = "1; mode=block";
+        context.Response.Headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains";
+        await next();
+    });
+    
+    // CORS restrictivo para producción
+    app.UseCors("ProductionCorsPolicy");
 }
 else
 {
-    app.UseCors("AllowFrontendPolicy"); // Restricted to frontend origins
+    // CRÍTICO: Swagger SOLO en desarrollo
+    app.UseSwagger();
+    app.UseSwaggerUI();
+    
+    // CORS permisivo para desarrollo
+    app.UseCors("AllowAllPolicy");
 }
 
-app.UseHttpsRedirection();
+// Health checks endpoint
+app.MapHealthChecks("/health");
 
 app.UseAuthorization();
 

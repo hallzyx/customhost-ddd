@@ -5,3 +5,37 @@ riderModule.iml
 /_ReSharper.Caches/
 # Rider specific files
 /customhost.platform.API/appsettings.Development.json
+
+# ARCHIVOS CRÍTICOS DE PRODUCCIÓN QUE NUNCA DEBEN SER COMMITEADOS
+
+# Variables de entorno con secretos
+.env.production
+.env.local
+.env
+
+# Certificados SSL
+*.pfx
+*.p12
+*.key
+*.crt
+*.pem
+certs/
+
+# Logs de producción
+logs/
+*.log
+
+# Backups de base de datos
+backup/
+*.sql
+
+# Configuraciones de producción con secretos
+appsettings.Production.json
+appsettings.Local.json
+
+# Archivos de Docker sensibles
+docker-compose.override.yml
+
+# Archivos temporales
+temp/
+tmp/

@@ -1,2 +1,12 @@
-[variables]
-DOTNET_VERSION = "9.0"
+[phases.setup]
+nixPkgs = ["dotnet-sdk_9_0"]
+cmds = ["dotnet --info"] # Verify .NET installation
+
+[phases.build]
+cmds = ["dotnet publish -c Release -o /app/public"]
+
+[phases.install]
+cmds = ["dotnet restore"]
+
+[start]
+cmd = "dotnet /app/public/YourAppName.dll"
