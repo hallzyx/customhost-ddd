@@ -104,6 +104,68 @@ docker stats
 
 ## 🚨 Troubleshooting
 
+### Error de Docker Registry (Microsoft Container Registry)
+
+Si ves este error:
+```
+failed to copy: httpReadSeeker: failed open: failed to do request: Get "https://eastus.data.mcr.microsoft.com/..."
+```
+
+**Soluciones (en orden de prioridad):**
+
+#### 1. Reiniciar Docker Desktop
+```bash
+# Reiniciar Docker completamente
+docker system prune -a
+# Reiniciar Docker Desktop desde la aplicación
+```
+
+#### 2. Configurar DNS alternativo
+```bash
+# Cambiar DNS a Google o Cloudflare
+# En Windows: Panel de Control > Conexiones de Red
+# DNS Primario: 8.8.8.8
+# DNS Secundario: 8.8.4.4
+```
+
+#### 3. Usar imagen alternativa en Dockerfile
+```dockerfile
+# En lugar de:
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
+
+# Usar:
+FROM docker.io/microsoft/dotnet:8.0-aspnet AS base
+```
+
+#### 4. Configurar proxy/timeout en Docker
+```bash
+# Crear/editar ~/.docker/config.json
+{
+  "proxies": {
+    "default": {
+      "httpProxy": "http://proxy.company.com:8080",
+      "httpsProxy": "http://proxy.company.com:8080"
+    }
+  }
+}
+```
+
+#### 5. Dockerfile alternativo para problemas de conectividad
+Usar este Dockerfile si persisten problemas:
+
+```dockerfile
+# Dockerfile alternativo con imágenes de Docker Hub
+FROM docker.io/microsoft/dotnet:8.0-aspnet AS base
+WORKDIR /app
+EXPOSE 80
+EXPOSE 443
+
+FROM docker.io/microsoft/dotnet:8.0-sdk AS build
+WORKDIR /src
+
+# Resto del Dockerfile igual...
+```
+
 ### Si la aplicación no inicia:
 
 ```bash
