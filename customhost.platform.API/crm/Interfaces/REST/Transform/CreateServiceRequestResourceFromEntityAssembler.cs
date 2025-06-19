@@ -27,7 +27,7 @@ public static class ServiceRequestResourceFromEntityAssembler
             serviceRequest.UserId,
             serviceRequest.HotelId,
             serviceRequest.RoomId,
-            serviceRequest.AssignedTo?.ToString(), // Convert int to string
+            serviceRequest.AssignedTo, // Now int? directly, no conversion needed
             serviceRequest.CreatedAt,
             null, // ResolvedAt doesn't exist, using null
             serviceRequest.CompletedAt,

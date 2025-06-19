@@ -14,15 +14,12 @@ public static class UpdateServiceRequestCommandFromResourceAssembler
 
         EServiceRequestStatus? status = null;
         if (!string.IsNullOrEmpty(resource.Status) && Enum.TryParse<EServiceRequestStatus>(resource.Status, out var parsedStatus))
-            status = parsedStatus;
-
-        EServiceRequestPriority? priority = null;
+            status = parsedStatus;        EServiceRequestPriority? priority = null;
         if (!string.IsNullOrEmpty(resource.Priority) && Enum.TryParse<EServiceRequestPriority>(resource.Priority, out var parsedPriority))
             priority = parsedPriority;
 
-        int? assignedTo = null;
-        if (!string.IsNullOrEmpty(resource.AssignedTo) && int.TryParse(resource.AssignedTo, out var parsedAssignedTo))
-            assignedTo = parsedAssignedTo;
+        // AssignedTo is now int? directly, no need to parse
+        int? assignedTo = resource.AssignedTo;
 
         return new UpdateServiceRequestCommand(
             id,

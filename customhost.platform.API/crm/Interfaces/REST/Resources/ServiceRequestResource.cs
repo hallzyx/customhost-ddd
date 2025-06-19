@@ -10,7 +10,7 @@ public record ServiceRequestResource(
     int UserId,
     int HotelId,
     int RoomId,
-    string? AssignedTo,
+    int? AssignedTo,
     DateTime CreatedAt,
     DateTime? ResolvedAt,
     DateTime? CompletedAt,
