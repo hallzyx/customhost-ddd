@@ -3,6 +3,9 @@ using customhost_backend.crm.Domain.Models.Commands;
 using customhost_backend.crm.Domain.Services;
 using customhost_backend.crm.Interfaces.REST.Resources;
 using customhost_backend.crm.Interfaces.REST.Transform;
+using customhost_backend.GuestExperience.Domain.Services;
+using customhost_backend.GuestExperience.Domain.Model.Queries;
+using customhost_backend.GuestExperience.Interfaces.REST.Transform;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -14,7 +17,8 @@ namespace customhost_backend.crm.Interfaces.REST;
 [SwaggerTag("Available Room Endpoints.")]
 public class RoomsController(
     IRoomCommandService roomCommandService,
-    IRoomQueryService roomQueryService)
+    IRoomQueryService roomQueryService,
+    IRoomDeviceQueryService roomDeviceQueryService)
     : ControllerBase
 {
     [HttpGet]
@@ -90,5 +94,48 @@ public class RoomsController(
         if (!success) return NotFound();
         
         return NoContent();
+    }
+
+    [HttpGet("with-devices")]
+    [SwaggerOperation("Get All Rooms with IoT Devices", "Get all rooms with their associated IoT devices.", OperationId = "GetAllRoomsWithDevices")]
+    [SwaggerResponse(200, "The rooms with devices were found and returned.", typeof(IEnumerable<RoomWithDevicesResource>))]
+    public async Task<IActionResult> GetAllRoomsWithDevices([FromQuery] int? hotelId = null)
+    {
+        IEnumerable<customhost_backend.crm.Domain.Models.Aggregates.Room> rooms;
+        
+        if (hotelId.HasValue)
+        {
+            rooms = await roomQueryService.GetByHotelIdAsync(hotelId.Value);
+        }
+        else
+        {
+            rooms = await roomQueryService.GetAllAsync();
+        }
+
+        // Get all room devices
+        var getAllRoomDevicesQuery = new GetAllRoomDevicesQuery();
+        var allRoomDevices = await roomDeviceQueryService.Handle(getAllRoomDevicesQuery);
+
+        // Create rooms with devices resources
+        var roomsWithDevices = rooms.Select(room =>
+        {
+            // Filter room devices for this specific room
+            var roomDevices = allRoomDevices.Where(rd => rd.RoomId == room.Id);
+            
+            // Convert to resources
+            var deviceResources = roomDevices.Select(RoomDeviceResourceFromEntityAssembler.ToResourceFromEntity);
+              return new RoomWithDevicesResource(
+                room.Id,
+                room.RoomNumber,
+                room.Status.ToString(),
+                room.Type.ToString(),
+                room.HotelId,
+                room.Price,
+                room.Floor,
+                deviceResources
+            );
+        });
+
+        return Ok(roomsWithDevices);
     }
 }
