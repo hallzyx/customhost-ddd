@@ -152,9 +152,7 @@ public class BookingCommandService(
             // Log error
             return false;
         }
-    }
-
-    /// <inheritdoc />
+    }    /// <inheritdoc />
     public async Task<bool> Handle(MarkBookingAsNoShowCommand command)
     {
         var booking = await bookingRepository.FindByIdAsync(command.Id);
@@ -165,6 +163,26 @@ public class BookingCommandService(
         {
             booking.MarkAsNoShow();
             bookingRepository.Update(booking);
+            await unitOfWork.CompleteAsync();
+            return true;
+        }
+        catch (Exception)
+        {
+            // Log error
+            return false;
+        }
+    }
+
+    /// <inheritdoc />
+    public async Task<bool> Handle(DeleteBookingCommand command)
+    {
+        var booking = await bookingRepository.FindByIdAsync(command.Id);
+        if (booking == null)
+            return false;
+
+        try
+        {
+            bookingRepository.Remove(booking);
             await unitOfWork.CompleteAsync();
             return true;
         }

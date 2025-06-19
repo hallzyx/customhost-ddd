@@ -49,11 +49,17 @@ public interface IBookingCommandService
     /// <param name="command">Cancel booking command</param>
     /// <returns>True if cancelled successfully</returns>
     Task<bool> Handle(CancelBookingCommand command);
-    
-    /// <summary>
+      /// <summary>
     /// Handle mark booking as no show command
     /// </summary>
     /// <param name="command">Mark booking as no show command</param>
     /// <returns>True if marked as no show successfully</returns>
     Task<bool> Handle(MarkBookingAsNoShowCommand command);
+    
+    /// <summary>
+    /// Handle delete booking command
+    /// </summary>
+    /// <param name="command">Delete booking command</param>
+    /// <returns>True if deleted successfully</returns>
+    Task<bool> Handle(DeleteBookingCommand command);
 }

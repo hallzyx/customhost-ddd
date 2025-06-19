@@ -161,9 +161,7 @@ public class BookingController(
         var bookings = await bookingQueryService.Handle(getBookingsByRoomQuery);
         var bookingResources = bookings.Select(BookingResourceFromEntityAssembler.ToResourceFromEntity);
         return Ok(bookingResources);
-    }
-
-    [HttpGet("status/{status}")]
+    }    [HttpGet("status/{status}")]
     [SwaggerOperation("Get Bookings by Status", "Get bookings with a specific status.", OperationId = "GetBookingsByStatus")]
     [SwaggerResponse(200, "The bookings were found and returned.", typeof(IEnumerable<BookingResource>))]
     public async Task<IActionResult> GetBookingsByStatus(string status)
@@ -172,5 +170,17 @@ public class BookingController(
         var bookings = await bookingQueryService.Handle(getBookingsByStatusQuery);
         var bookingResources = bookings.Select(BookingResourceFromEntityAssembler.ToResourceFromEntity);
         return Ok(bookingResources);
+    }
+
+    [HttpDelete("{bookingId:int}")]
+    [SwaggerOperation("Delete Booking", "Delete a booking permanently.", OperationId = "DeleteBooking")]
+    [SwaggerResponse(204, "The booking was deleted successfully.")]
+    [SwaggerResponse(404, "The booking was not found.")]
+    public async Task<IActionResult> DeleteBooking(int bookingId)
+    {
+        var deleteBookingCommand = new DeleteBookingCommand(bookingId);
+        var result = await bookingCommandService.Handle(deleteBookingCommand);
+        if (!result) return NotFound();
+        return NoContent();
     }
 }
