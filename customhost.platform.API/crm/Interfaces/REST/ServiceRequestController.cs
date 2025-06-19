@@ -93,6 +93,19 @@ public class ServiceRequestController(
         return Ok(resources);
     }
 
+    [HttpGet("room/{roomId:int}")]
+    [SwaggerOperation(
+        Summary = "Get service requests by room ID",
+        Description = "Retrieves all service requests for a specific room.",
+        OperationId = "GetServiceRequestsByRoomId")]
+    [SwaggerResponse(200, "Service requests retrieved successfully", typeof(IEnumerable<ServiceRequestResource>))]
+    public async Task<ActionResult> GetServiceRequestsByRoomId(int roomId)
+    {
+        var serviceRequests = (await serviceRequestQueryService.GetByRoomIdAsync(roomId)).ToList();
+        var resources = ServiceRequestResourceFromEntityAssembler.ToResourcesFromEntities(serviceRequests);
+        return Ok(resources);
+    }
+
     [HttpGet("status/{status}")]
     [SwaggerOperation(
         Summary = "Get service requests by status",

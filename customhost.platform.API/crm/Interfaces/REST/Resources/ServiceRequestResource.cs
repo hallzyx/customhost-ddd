@@ -9,6 +9,7 @@ public record ServiceRequestResource(
     string Priority,
     int UserId,
     int HotelId,
+    int RoomId,
     string? AssignedTo,
     DateTime CreatedAt,
     DateTime? ResolvedAt,

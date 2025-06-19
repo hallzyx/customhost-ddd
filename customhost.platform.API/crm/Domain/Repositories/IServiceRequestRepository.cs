@@ -8,5 +8,6 @@ public interface IServiceRequestRepository : IBaseRepository<ServiceRequest>
 {
     Task<IEnumerable<ServiceRequest>> FindByUserIdAsync(int userId);
     Task<IEnumerable<ServiceRequest>> FindByHotelIdAsync(int hotelId);
+    Task<IEnumerable<ServiceRequest>> FindByRoomIdAsync(int roomId);
     Task<IEnumerable<ServiceRequest>> FindByStatusAsync(EServiceRequestStatus status);
 }

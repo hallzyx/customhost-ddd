@@ -21,8 +21,11 @@ public record CreateServiceRequestResource
     [Required(ErrorMessage = "User ID is required.")]
     [Range(1, int.MaxValue, ErrorMessage = "User ID must be a positive integer.")]
     public int? UserId { get; set; }
-    
-    [Required(ErrorMessage = "Hotel ID is required.")]
+      [Required(ErrorMessage = "Hotel ID is required.")]
     [Range(1, int.MaxValue, ErrorMessage = "Hotel ID must be a positive integer.")]
     public int? HotelId { get; set; }
+    
+    [Required(ErrorMessage = "Room ID is required.")]
+    [Range(1, int.MaxValue, ErrorMessage = "Room ID must be a positive integer.")]
+    public int? RoomId { get; set; }
 }

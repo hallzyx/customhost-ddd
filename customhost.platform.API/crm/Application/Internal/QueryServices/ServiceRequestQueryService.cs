@@ -36,6 +36,12 @@ public class ServiceRequestQueryService(IServiceRequestRepository serviceRequest
     }
 
     /// <inheritdoc />
+    public async Task<IEnumerable<ServiceRequest>> GetByRoomIdAsync(int roomId)
+    {
+        return await serviceRequestRepository.FindByRoomIdAsync(roomId);
+    }
+
+    /// <inheritdoc />
     public async Task<IEnumerable<ServiceRequest>> GetByStatusAsync(string status)
     {
         if (Enum.TryParse<EServiceRequestStatus>(status, out var statusEnum))

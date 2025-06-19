@@ -11,12 +11,10 @@ public static class CreateServiceRequestCommandFromResourceAssembler
         if (!Enum.TryParse<EServiceRequestType>(resource.Type, out var type))
             type = EServiceRequestType.Maintenance;
               if (!Enum.TryParse<EServiceRequestPriority>(resource.Priority, out var priority))
-            priority = EServiceRequestPriority.Normal;
-
-        return new CreateServiceRequestCommand(
+            priority = EServiceRequestPriority.Normal;        return new CreateServiceRequestCommand(
             resource.UserId ?? 0,
             resource.HotelId ?? 0,
-            0, // RoomId - not provided in frontend model
+            resource.RoomId ?? 0,
             type,
             resource.Title ?? "", // Using Title as Category
             resource.Description ?? "",

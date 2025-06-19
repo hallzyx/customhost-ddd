@@ -17,9 +17,7 @@ public static class ServiceRequestResourceFromEntityAssembler
         catch
         {
             historyList = new List<string>();
-        }
-
-        return new ServiceRequestResource(
+        }        return new ServiceRequestResource(
             serviceRequest.Id,
             serviceRequest.Category, // Using Category as Title since Title doesn't exist
             serviceRequest.Description,
@@ -28,6 +26,7 @@ public static class ServiceRequestResourceFromEntityAssembler
             serviceRequest.Priority.ToString(),
             serviceRequest.UserId,
             serviceRequest.HotelId,
+            serviceRequest.RoomId,
             serviceRequest.AssignedTo?.ToString(), // Convert int to string
             serviceRequest.CreatedAt,
             null, // ResolvedAt doesn't exist, using null

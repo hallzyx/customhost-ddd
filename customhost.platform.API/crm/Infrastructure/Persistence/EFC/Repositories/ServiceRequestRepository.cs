@@ -24,6 +24,13 @@ public class ServiceRequestRepository(AppDbContext context )
             .ToListAsync();
     }
 
+    public async Task<IEnumerable<ServiceRequest>> FindByRoomIdAsync(int roomId)
+    {
+        return await Context.Set<ServiceRequest>()
+            .Where(sr => sr.RoomId == roomId)
+            .ToListAsync();
+    }
+
     public async Task<IEnumerable<ServiceRequest>> FindByStatusAsync(EServiceRequestStatus status)
     {
         return await Context.Set<ServiceRequest>()

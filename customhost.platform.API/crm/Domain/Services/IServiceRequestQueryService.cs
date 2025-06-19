@@ -35,6 +35,13 @@ public interface IServiceRequestQueryService
     Task<IEnumerable<ServiceRequest>> GetByHotelIdAsync(int hotelId);
     
     /// <summary>
+    /// Get service requests by room ID
+    /// </summary>
+    /// <param name="roomId">Room ID</param>
+    /// <returns>Room service requests</returns>
+    Task<IEnumerable<ServiceRequest>> GetByRoomIdAsync(int roomId);
+    
+    /// <summary>
     /// Get service requests by status
     /// </summary>
     /// <param name="status">Service request status</param>
